@@ -1,0 +1,24 @@
+-- Script de Criação de Tabelas
+-- Banco de Dados: AddressChallenge
+
+CREATE TABLE Usuarios (
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    Nome NVARCHAR(100) NOT NULL,
+    Usuario NVARCHAR(50) NOT NULL UNIQUE,
+    Senha NVARCHAR(255) NOT NULL
+);
+GO
+
+CREATE TABLE Enderecos (
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    Cep NVARCHAR(9) NOT NULL,
+    Logradouro NVARCHAR(150) NOT NULL,
+    Complemento NVARCHAR(100),
+    Bairro NVARCHAR(100) NOT NULL,
+    Cidade NVARCHAR(100) NOT NULL,
+    Uf CHAR(2) NOT NULL,
+    Numero NVARCHAR(20) NOT NULL,
+    UsuarioId UNIQUEIDENTIFIER NOT NULL,
+    CONSTRAINT FK_Enderecos_Usuarios FOREIGN KEY (UsuarioId) REFERENCES Usuarios(Id) ON DELETE CASCADE
+);
+GO
