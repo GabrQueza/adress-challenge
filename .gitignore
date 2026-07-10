@@ -1,0 +1,26 @@
+# Node.js
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*
+
+# .NET Core
+bin/
+obj/
+TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outros
+coverage/
+.vscode/
+.idea/
