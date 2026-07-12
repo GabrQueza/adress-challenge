@@ -135,5 +135,28 @@ namespace backend.Controllers
 
             return Ok(viaCepResult);
         }
+
+        [HttpGet("exportar")]
+        public async Task<IActionResult> ExportarCsv()
+        {
+            var userId = GetUsuarioId();
+            var enderecos = await _context.Enderecos
+                .Where(e => e.UsuarioId == userId)
+                .ToListAsync();
+
+            var builder = new System.Text.StringBuilder();
+            builder.AppendLine("CEP,Logradouro,Numero,Complemento,Bairro,Cidade,UF");
+
+            foreach (var end in enderecos)
+            {
+                builder.AppendLine($"\"{end.Cep}\",\"{end.Logradouro}\",\"{end.Numero}\",\"{end.Complemento}\",\"{end.Bairro}\",\"{end.Cidade}\",\"{end.Uf}\"");
+            }
+
+            var csvBytes = System.Text.Encoding.UTF8.GetBytes(builder.ToString());
+            var bom = System.Text.Encoding.UTF8.GetPreamble();
+            var result = bom.Concat(csvBytes).ToArray();
+
+            return File(result, "text/csv", "enderecos.csv");
+        }
     }
 }
