@@ -11,7 +11,7 @@ Desenvolver uma aplicação web robusta utilizando C# (.NET 8) no backend e Reac
 
 ## 💻 Tecnologias Utilizadas
 
-Este projeto foi construído utilizando as melhores e mais modernas práticas do mercado:
+Este projeto foi construído utilizando:
 
 ### Backend
 - **C# / .NET 8 (ASP.NET Core Web API)**
