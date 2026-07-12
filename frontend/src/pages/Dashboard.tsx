@@ -32,7 +32,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { FiEdit2, FiTrash2, FiPlus, FiLogOut } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiPlus, FiLogOut, FiDownload } from 'react-icons/fi';
 import api from '../services/api';
 
 interface Endereco {
@@ -181,6 +181,22 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const handleExportarCsv = async () => {
+    try {
+      const response = await api.get('/Endereco/exportar', { responseType: 'blob' });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'enderecos.csv');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+      toast({ title: 'Exportação concluída!', status: 'success', duration: 2000 });
+    } catch (error) {
+      toast({ title: 'Erro ao exportar CSV', status: 'error', duration: 3000 });
+    }
+  };
+
   if (isLoading) {
     return (
       <Flex height="100vh" alignItems="center" justifyContent="center" bg="gray.50">
@@ -194,6 +210,9 @@ const Dashboard: React.FC = () => {
       <Flex maxW="6xl" mx="auto" justify="space-between" align="center" mb={8}>
         <Heading color="blue.700">Meus Endereços</Heading>
         <HStack>
+          <Button leftIcon={<FiDownload />} colorScheme="green" onClick={handleExportarCsv}>
+            Exportar para CSV
+          </Button>
           <Button leftIcon={<FiPlus />} colorScheme="blue" onClick={() => handleOpenModal()}>
             Novo Endereço
           </Button>
