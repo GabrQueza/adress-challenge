@@ -40,6 +40,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 
 // Configure DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
